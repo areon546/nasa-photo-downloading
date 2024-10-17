@@ -12,13 +12,18 @@ if response:
 
     jsonRes = None
 
-    with open("content.json", "w") as file:
+    # with open("content.json", "w") as file:
         # file.write(response.text)
 
+    with open("links.txt", "w") as file:
         jsonRes = response.json() # json output of text file
 
-    print(jsonRes["photos"][0]["img_src"])
-    print(len(jsonRes["photos"]))
+        print(jsonRes["photos"][0]["img_src"])
+        print(len(jsonRes["photos"]))
+
+        for i in range (len(jsonRes["photos"])):
+            file.write(f"{jsonRes["photos"][i]["img_src"]},\n")
+            # print(i)
 
 
     ## continue
