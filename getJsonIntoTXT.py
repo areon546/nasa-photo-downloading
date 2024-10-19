@@ -11,7 +11,7 @@ def writeToFile(htmlResponse):
             print(len(jsonRes["photos"]))
 
             for i in range (len(jsonRes["photos"])):
-                file.write(f"{jsonRes["photos"][i]["img_src"]},\n")
+                file.write(f"{jsonRes["photos"][i]["img_src"]}\n")
                 # print(i)
 
 def main(params):
@@ -19,13 +19,14 @@ def main(params):
 
     # do a get request of api listed above
     url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos'
+    params = {"api_key" : "DEMO_KEY"}
     params["sol"] = "1000"
 
     response = requests.get(url, params)
 
     if response:
         print("Success!")
-        writeToFile(response)        
+        writeToFile(response)
     else:
         raise Exception(f"Non-success status code: {response.status_code}")
 
@@ -33,4 +34,4 @@ def main(params):
 if __name__ == "__main__":
     print("Hello, World!")
     
-    main()
+    main({})
