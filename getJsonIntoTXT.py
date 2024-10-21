@@ -81,17 +81,22 @@ API_IN_USE = APIS.EPIC
 
 
 def writeToFile(htmlResponse):
-        jsonRes = None
 
-        with open(fileWrittenTo, "w") as file:
+        try:
             jsonRes = htmlResponse.json() # json output of text file
+        except requests.JSONDecodeError:
+            print("Invalid API keys entered")
+            return
+        else:
+            with open(fileWrittenTo, "w") as file:
+                print(htmlResponse.content)
 
-            print(jsonRes["photos"][0]["img_src"])
-            print(len(jsonRes["photos"]))
+                print(jsonRes["photos"][0]["img_src"])
+                print(len(jsonRes["photos"]))
 
-            for i in range (len(jsonRes["photos"])):
-                file.write(f"{jsonRes["photos"][i]["img_src"]}\n")
-                # print(i)
+                for i in range (len(jsonRes["photos"])):
+                    file.write(f"{jsonRes["photos"][i]["img_src"]}\n")
+                    # print(i)
 
 def main(params):
     # so i wanna do a get request of this github link
@@ -104,7 +109,7 @@ def main(params):
     response = requests.get(url, params)
 
     if response:
-        print("Success!")
+        print("Link to NASA successfull!")
         writeToFile(response)
     else:
         raise Exception(f"Non-success status code: {response.status_code}")
